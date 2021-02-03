@@ -1,0 +1,8 @@
+# [WRITETOFILES.TXT]
+# [All .txt files to update counters to. Each file path]
+# [is separated by line. If the .txt file is in this]
+# [folder, path is shortened to start from this folder.]
+# [For example, 'C:/Users/User/Desktop/OBI/counter.txt']
+# [would instead be written here as just 'counter.txt]
+
+
