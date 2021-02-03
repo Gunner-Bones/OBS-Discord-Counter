@@ -204,7 +204,7 @@ async def newcounter(ctx, name):
 							j_overwrite(FILE_CONFIG, configs)
 							resp = 'Counter set!\n'
 							resp += 'Name: `' + name + '`\n'
-							resp += 'Files to Write to: \n' + ''.join(['`' + wf['path'] + '`\n' for wf in selections])
+							resp += 'Files to Write to: \n' + ''.join(['`' + formatFilepath(wf['path']) + '`\n' for wf in selections])
 							resp += 'Make sure your TXT files include a number!\n'
 							await response(message=message, react='SUCCESS', dynamic=resp)
 						else:
@@ -229,11 +229,12 @@ async def change(ctx, name, pmvalue):
 			if pmvalue[0] in allowed and falseInsteadExceptionInt(pmvalue[1:]): # Valid pmvalue
 				cnt = 0
 				for wf in configs['counters']:
-					for fl in wf['files']:
-						data = readLinesTXT(fl)
-						changed = [updateStrNumbers(line, pmvalue[0], int(pmvalue[1:])) for line in data]
-						writeLinesTXT(fl, changed)
-						cnt += 1
+					if wf['name'] == name:
+						for fl in wf['files']:
+							data = readLinesTXT(fl)
+							changed = [updateStrNumbers(line, pmvalue[0], int(pmvalue[1:])) for line in data]
+							writeLinesTXT(fl, changed)
+							cnt += 1
 				await response(message=ctx.message, react='SUCCESS', dynamic='Updated `' + pmvalue + '` for *' + \
 					str(cnt) + '* files.')
 			else:
